@@ -93,14 +93,6 @@
                   </div>
                 </div>
 
-                <!-- Last Name -->
-                <div class="form-group {{ $errors->has('last_name') ? 'has-error' : '' }}">
-                  <label class="col-md-3 control-label" for="last_name">{{ trans('general.last_name') }} </label>
-                  <div class="col-md-6{{  (\App\Helpers\Helper::checkIfRequired($user, 'last_name')) ? ' required' : '' }}">
-                    <input class="form-control" type="text" name="last_name" id="last_name" value="{{ old('last_name', $user->last_name) }}" />
-                    {!! $errors->first('last_name', '<span class="alert-msg" aria-hidden="true">:message</span>') !!}
-                  </div>
-                </div>
 
                 <!-- Username -->
                 <div class="form-group {{ $errors->has('username') ? 'has-error' : '' }}">
@@ -156,7 +148,7 @@
                   </div>
                   <div class="col-md-2">
                     @if ($user->ldap_import!='1')
-                      <a href="#" class="left" id="genPassword">Generate</a>
+                      <a href="#" class="left" id="genPassword">Generer passord</a>
                     @endif
                   </div>
                 </div>
@@ -257,11 +249,11 @@
                           <div class="col-md-9">
                               <div class="icheckbox disabled" id="email_user_div">
                                   {{ Form::checkbox('email_user', '1', Request::old('email_user'),['class' => 'minimal', 'disabled'=>true, 'id' => 'email_user_checkbox']) }}
-                                  Email this user their credentials?
+                                  Send innloggingsinformasjon på epost?
 
                               </div>
                               <p class="help-block">
-                                  {{ trans('admin/users/general.send_email_help') }}
+                                  Epostadresse må oppgis for å kunne sende innloggingsinformasjon på epost. Passord kan ikke hentes etter lagring.
                               </p>
 
 
@@ -269,18 +261,13 @@
                       </div> <!--/form-group-->
                   @endif
 
-                <!-- Company -->
-                @if (\App\Models\Company::canManageUsersCompanies())
-                    @include ('partials.forms.edit.company-select', ['translated_name' => trans('general.select_company'), 'fieldname' => 'company_id'])
-                @endif
-
-
               <!-- Image -->
                   @if ($user->avatar)
                       <div class="form-group {{ $errors->has('image_delete') ? 'has-error' : '' }}">
                           <label class="col-md-3 control-label" for="image_delete">{{ trans('general.image_delete') }}</label>
                           <div class="col-md-5">
                               {{ Form::checkbox('image_delete') }}
+
                               <img src="{{ Storage::disk('public')->url(app('users_upload_path').e($user->avatar)) }}" class="img-responsive" />
                               {!! $errors->first('image_delete', '<span class="alert-msg"><br>:message</span>') !!}
                           </div>
@@ -299,115 +286,7 @@
                   </div>
                 </div>
 
-                <!-- Employee Number -->
-                <div class="form-group {{ $errors->has('employee_num') ? 'has-error' : '' }}">
-                  <label class="col-md-3 control-label" for="employee_num">{{ trans('admin/users/table.employee_num') }}</label>
-                  <div class="col-md-6">
-                    <input
-                      class="form-control"
-                      type="text"
-                      aria-label="employee_num"
-                      name="employee_num"
-                      id="employee_num"
-                      value="{{ Request::old('employee_num', $user->employee_num) }}"
-                    />
-                    {!! $errors->first('employee_num', '<span class="alert-msg" aria-hidden="true">:message</span>') !!}
-                  </div>
-                </div>
-
-
-                <!-- Jobtitle -->
-                <div class="form-group {{ $errors->has('jobtitle') ? 'has-error' : '' }}">
-                  <label class="col-md-3 control-label" for="jobtitle">{{ trans('admin/users/table.title') }}</label>
-                  <div class="col-md-6">
-                    <input
-                      class="form-control"
-                      type="text"
-                      name="jobtitle"
-                      id="jobtitle"
-                      value="{{ Request::old('jobtitle', $user->jobtitle) }}"
-                    />
-                    {!! $errors->first('jobtitle', '<span class="alert-msg" aria-hidden="true">:message</span>') !!}
-                  </div>
-                </div>
-
-
-                <!-- Manager -->
-              @include ('partials.forms.edit.user-select', ['translated_name' => trans('admin/users/table.manager'), 'fieldname' => 'manager_id'])
-
-                  <!--  Department -->
-              @include ('partials.forms.edit.department-select', ['translated_name' => trans('general.department'), 'fieldname' => 'department_id'])
-
-
-                  <!-- Location -->
-              @include ('partials.forms.edit.location-select', ['translated_name' => trans('general.location'), 'fieldname' => 'location_id'])
-
-                <!-- Phone -->
-                <div class="form-group {{ $errors->has('phone') ? 'has-error' : '' }}">
-                  <label class="col-md-3 control-label" for="phone">{{ trans('admin/users/table.phone') }}</label>
-                  <div class="col-md-6">
-                    <input class="form-control" type="text" name="phone" id="phone" value="{{ old('phone', $user->phone) }}" />
-                    {!! $errors->first('phone', '<span class="alert-msg" aria-hidden="true">:message</span>') !!}
-                  </div>
-                </div>
-
-                  <!-- Website URL -->
-                  <div class="form-group {{ $errors->has('website') ? ' has-error' : '' }}">
-                      <label for="website" class="col-md-3 control-label">{{ trans('general.website') }}</label>
-                      <div class="col-md-6">
-                          <input class="form-control" type="text" name="website" id="website" value="{{ old('website', $user->website) }}" />
-                          {!! $errors->first('website', '<span class="alert-msg" aria-hidden="true"><i class="fa fa-times" aria-hidden="true"></i> :message</span>') !!}
-                      </div>
-                  </div>
-
-                  <!-- Address -->
-                  <div class="form-group{{ $errors->has('address') ? ' has-error' : '' }}">
-                      <label class="col-md-3 control-label" for="address">{{ trans('general.address') }}</label>
-                      <div class="col-md-6">
-                          <input class="form-control" type="text" name="address" id="address" value="{{ old('address', $user->address) }}" />
-                          {!! $errors->first('address', '<span class="alert-msg" aria-hidden="true">:message</span>') !!}
-                      </div>
-                  </div>
-
-                  <!-- City -->
-                  <div class="form-group{{ $errors->has('city') ? ' has-error' : '' }}">
-                      <label class="col-md-3 control-label" for="city">{{ trans('general.city') }}</label>
-                      <div class="col-md-6">
-                          <input class="form-control" type="text" name="city" id="city" aria-label="city" value="{{ old('city', $user->city) }}" />
-                          {!! $errors->first('city', '<span class="alert-msg" aria-hidden="true">:message</span>') !!}
-                      </div>
-                  </div>
-
-                  <!-- State -->
-                  <div class="form-group{{ $errors->has('state') ? ' has-error' : '' }}">
-                      <label class="col-md-3 control-label" for="state">{{ trans('general.state') }}</label>
-                      <div class="col-md-6">
-                          <input class="form-control" type="text" name="state" id="state" value="{{ old('state', $user->state) }}" maxlength="3" />
-                          {!! $errors->first('state', '<span class="alert-msg" aria-hidden="true">:message</span>') !!}
-                      </div>
-                  </div>
-
-                  <!-- Country -->
-                  <div class="form-group{{ $errors->has('country') ? ' has-error' : '' }}">
-                      <label class="col-md-3 control-label" for="country">{{ trans('general.country') }}</label>
-                      <div class="col-md-6">
-                          {!! Form::countries('country', old('country', $user->country), 'col-md-6 select2') !!}
-                          {!! $errors->first('country', '<span class="alert-msg" aria-hidden="true">:message</span>') !!}
-                      </div>
-                  </div>
-
-                  <!-- Zip -->
-                  <div class="form-group{{ $errors->has('zip') ? ' has-error' : '' }}">
-                      <label class="col-md-3 control-label" for="zip">{{ trans('general.zip') }}</label>
-                      <div class="col-md-3">
-                          <input class="form-control" type="text" name="zip" id="zip" value="{{ old('zip', $user->zip) }}" maxlength="10" />
-                          {!! $errors->first('zip', '<span class="alert-msg" aria-hidden="true">:message</span>') !!}
-                      </div>
-                  </div>
-
-
-
-
+      
 
                 @if ($snipeSettings->two_factor_enabled!='')
                   @if ($snipeSettings->two_factor_enabled=='1')

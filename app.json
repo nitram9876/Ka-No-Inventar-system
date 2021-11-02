@@ -32,7 +32,7 @@
       },
       "APP_LOCALE": {
         "description": "Which language do you want to use for your install? (https://snipe-it.readme.io/docs/configuration#setting-a-language)",
-        "value": "en"
+        "value": "no"
       },
       "MAX_RESULTS": {
         "description": "The maximum number of search results that can be returned at one time.",
