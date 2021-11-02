@@ -102,22 +102,9 @@ class UsersController extends Controller
             $user->password = bcrypt($request->input('password'));
         }
         $user->first_name = $request->input('first_name');
-        $user->last_name = $request->input('last_name');
-        $user->locale = $request->input('locale');
-        $user->employee_num = $request->input('employee_num');
         $user->activated = $request->input('activated', 0);
-        $user->jobtitle = $request->input('jobtitle');
-        $user->phone = $request->input('phone');
-        $user->location_id = $request->input('location_id', null);
-        $user->department_id = $request->input('department_id', null);
-        $user->company_id = Company::getIdForUser($request->input('company_id', null));
-        $user->manager_id = $request->input('manager_id', null);
         $user->notes = $request->input('notes');
-        $user->address = $request->input('address', null);
-        $user->city = $request->input('city', null);
-        $user->state = $request->input('state', null);
-        $user->country = $request->input('country', null);
-        $user->zip = $request->input('zip', null);
+
 
         // Strip out the superuser permission if the user isn't a superadmin
         $permissions_array = $request->input('permission');
@@ -252,24 +239,11 @@ class UsersController extends Controller
         }
         $user->email = $request->input('email');
         $user->first_name = $request->input('first_name');
-        $user->last_name = $request->input('last_name');
         $user->two_factor_optin = $request->input('two_factor_optin') ?: 0;
-        $user->locale = $request->input('locale');
-        $user->employee_num = $request->input('employee_num');
         $user->activated = $request->input('activated', 0);
-        $user->jobtitle = $request->input('jobtitle', null);
-        $user->phone = $request->input('phone');
-        $user->location_id = $request->input('location_id', null);
-        $user->company_id = Company::getIdForUser($request->input('company_id', null));
-        $user->manager_id = $request->input('manager_id', null);
         $user->notes = $request->input('notes');
-        $user->department_id = $request->input('department_id', null);
-        $user->address = $request->input('address', null);
-        $user->city = $request->input('city', null);
-        $user->state = $request->input('state', null);
-        $user->country = $request->input('country', null);
         $user->activated = $request->input('activated', 0);
-        $user->zip = $request->input('zip', null);
+
 
 
         // Update the location of any assets checked out to this user
