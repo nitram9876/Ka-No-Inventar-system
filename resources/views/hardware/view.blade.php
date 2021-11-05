@@ -31,7 +31,7 @@
                         @can('checkout', \App\Models\Asset::class)
                             <li role="menuitem">
                                 <a href="{{ route('checkout/hardware', $asset->id)  }}">
-                                    {{ trans('admin/hardware/general.checkout') }}
+                                    Sjekk ut eiendel
                                 </a>
                             </li>
                         @endcan
@@ -110,15 +110,7 @@
                         </a>
                     </li>
 
-                    <li>
-                        <a href="#software" data-toggle="tab">
-                          <span class="hidden-lg hidden-md">
-                            <i class="fa fa-save fa-2x" aria-hidden="true"></i>
-                          </span>
-                          <span class="hidden-xs hidden-sm">{{ trans('general.licenses') }}
-                          </span>
-                        </a>
-                    </li>
+                  
 
                     <li>
                         <a href="#components" data-toggle="tab">
@@ -130,16 +122,7 @@
                         </a>
                     </li>
 
-                    <li>
-                        <a href="#assets" data-toggle="tab">
-                          <span class="hidden-lg hidden-md">
-                            <i class="fa fa-barcode fa-2x" aria-hidden="true"></i>
-                          </span>
-                          <span class="hidden-xs hidden-sm">{{ trans('general.assets') }}
-                            
-                          </span>
-                        </a>
-                    </li>
+
 
                 
                     <li>
@@ -152,15 +135,7 @@
                         </a>
                     </li>
 
-                    <li>
-                        <a href="#maintenances" data-toggle="tab">
-                          <span class="hidden-lg hidden-md">
-                            <i class="fa fa-wrench fa-2x" aria-hidden="true"></i>
-                          </span>
-                          <span class="hidden-xs hidden-sm">{{ trans('general.maintenances') }}
-                          </span>
-                        </a>
-                    </li>
+                   
 
                     <li>
                         <a href="#files" data-toggle="tab">
@@ -238,16 +213,7 @@
                                         </div>
                                     @endif
 
-                                    @if ($asset->company)
-                                        <div class="row">
-                                            <div class="col-md-2">
-                                                <strong>{{ trans('general.company') }}</strong>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <a href="{{ url('/companies/' . $asset->company->id) }}">{{ $asset->company->name }}</a>
-                                            </div>
-                                        </div>
-                                    @endif
+                               
 
                                     @if ($asset->name)
                                         <div class="row">
@@ -405,16 +371,6 @@
                                         </div>
                                     @endif
 
-                                    <div class="row">
-                                        <div class="col-md-2">
-                                            <strong>
-                                                {{ trans('admin/models/table.modelnumber') }}
-                                            </strong>
-                                        </div>
-                                        <div class="col-md-6">
-                                            {{ ($asset->model) ? $asset->model->model_number : ''}}
-                                        </div>
-                                    </div>
 
                                     @if (($asset->model) && ($asset->model->fieldset))
                                         @foreach($asset->model->fieldset->fields as $field)
@@ -766,26 +722,7 @@
                                             {{ ($asset->userRequests) ? (int) $asset->userRequests->count() : '0' }}
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-md-2">
-                                            <strong>
-                                               Labels
-                                            </strong>
-                                        </div>
-                                        <div class="col-md-6">
-                                            {{ Form::open([
-                                                      'method' => 'POST',
-                                                      'route' => ['hardware/bulkedit'],
-                                                      'class' => 'form-inline',
-                                                       'id' => 'bulkForm']) }}
-                                                <input type="hidden" name="bulk_actions" value="labels" />
-                                                <input type="hidden" name="ids[{{$asset->id}}]" value="{{ $asset->id }}" />
-                                                <button class="btn btn-sm btn-default" id="bulkEdit" ><i class="fa fa-barcode" aria-hidden="true"></i> {{ trans_choice('button.generate_labels', 1) }}</button>
-
-                                            {{ Form::close() }}
-
-                                        </div>
-                                    </div>
+                                  
                                 </div> <!-- end row-striped -->
 
                             </div><!-- /col-md-8 -->
@@ -971,7 +908,7 @@
                                         <select name="bulk_actions" class="form-control select2" style="width: 150px;" aria-label="bulk_actions">
                                             <option value="edit">Edit</option>
                                             <option value="delete">Delete</option>
-                                            <option value="labels">Generate Labels</option>
+                                            
                                         </select>
                                         <button class="btn btn-primary" id="bulkEdit" disabled>Go</button>
                                     </div>
