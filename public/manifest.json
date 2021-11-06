@@ -1,0 +1,17 @@
+{
+    "name": "Arna MSK Inventar System",
+    "short_name": "Arna MSK IS",
+    "start_url": "/index.php",
+    "background_color": "#6777ef",
+    "description": "Inventar System for Arna MSK speidergruppe",
+    "display": "fullscreen",
+    "theme_color": "#6777ef",
+    "icons": [
+        {
+            "src": "logo.PNG",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ]
+}
