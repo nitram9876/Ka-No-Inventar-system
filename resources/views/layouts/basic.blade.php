@@ -39,6 +39,7 @@
         border-left-color: {{ $snipeSettings->header_color }};
         }
 
+
         .btn-primary {
         background-color: {{ $snipeSettings->header_color }};
         border-color: {{ $snipeSettings->header_color }};
@@ -80,6 +81,11 @@
 
     @stack('js')
 </body>
+<footer>
+    <div style="position: absolute; bottom: 0; left: 0; padding: 1%; color: #fafafa;">
+        <a target="_blank" href="http://arnaspeider.no/" rel="noopener">Arna MSK</a> Inventar System {{ env('APP_VERSION') }}                     
+    </div>
+</footer>
 
 </html>
 <script src="{{ asset('/sw.js') }}"></script>

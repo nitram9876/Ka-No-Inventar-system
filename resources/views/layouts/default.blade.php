@@ -822,7 +822,7 @@
 
         </div>
          
-        <a target="_blank" href="http://arnaspeider.no/" rel="noopener">Arna MSK</a> Inventar System alpha-1.0.0                         
+        <a target="_blank" href="http://arnaspeider.no/" rel="noopener">Arna MSK</a> Inventar System {{ env('APP_VERSION') }}                      
       </footer>
 
 

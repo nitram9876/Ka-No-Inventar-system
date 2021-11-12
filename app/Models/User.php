@@ -75,7 +75,7 @@ class User extends SnipeModel implements AuthenticatableContract, AuthorizableCo
         'first_name'              => 'required|string|min:1',
         'username'                => 'required|string|min:1|unique_undeleted',
         'email'                   => 'email|nullable',
-        'password'                => 'required|min:8',
+        'password'                => 'required|min:4',
         'locale'                  => 'max:10|nullable',
         'website'                 => 'url|nullable',
         'manager_id'              => 'nullable|exists:users,id|cant_manage_self',

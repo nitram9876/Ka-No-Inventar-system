@@ -60,10 +60,10 @@ class AssetPresenter extends Presenter
                 "formatter" => "hardwareLinkFormatter"
             ], [
                 "field" => "serial",
-                "searchable" => true,
-                "sortable" => true,
+                "searchable" => false,
+                "sortable" => false,
                 "title" => trans('admin/hardware/form.serial'),
-                "visible" => true,
+                "visible" => false,
                 "formatter" => "hardwareLinkFormatter"
             ],  [
                 "field" => "model",
