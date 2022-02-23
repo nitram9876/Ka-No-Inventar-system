@@ -360,10 +360,17 @@
                      @endcan
                      <li class="divider"></li>
                      <li>
-                         <a href="{{ url('/logout') }}">
-                             <i class="fa fa-sign-out fa-fw" aria-hidden="true"></i>
-                             {{ trans('general.logout') }}
-                         </a>
+
+                        <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            <i class="fa fa-sign-out fa-fw"></i> {{ trans('general.logout') }}
+                                    {{ csrf_field() }}
+                        </a>
+                        
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            {{ csrf_field() }}
+                        </form>
+
+                    
                      </li>
                  </ul>
                </li>
@@ -832,12 +839,12 @@
 
     <!-- end main container -->
 
-    <div class="modal  modal-danger fade" id="dataConfirmModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal modal-danger fade" id="dataConfirmModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" id="myModalLabel">&nbsp;</h4>
+                    <h2 class="modal-title" id="myModalLabel">&nbsp;</h2>
                 </div>
                 <div class="modal-body"></div>
                 <div class="modal-footer">
@@ -845,7 +852,7 @@
                     {{ csrf_field() }}
                     {{ method_field('DELETE') }}
 
-                    <button type="button" class="btn btn-default  pull-left" data-dismiss="modal">{{ trans('general.cancel') }}</button>
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">{{ trans('general.cancel') }}</button>
                     <button type="submit" class="btn btn-outline" id="dataConfirmOK">{{ trans('general.yes') }}</button>
                 </form>
                 </div>

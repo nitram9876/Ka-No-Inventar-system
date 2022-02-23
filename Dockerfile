@@ -77,6 +77,8 @@ COPY . /var/www/html
 
 RUN a2enmod rewrite
 
+COPY docker/column-statistics.cnf /etc/mysql/conf.d/column-statistics.cnf
+
 ############ INITIAL APPLICATION SETUP #####################
 
 WORKDIR /var/www/html
@@ -96,6 +98,8 @@ RUN \
       && rm -r "/var/www/html/storage/app/backups" && ln -fs "/var/lib/snipeit/dumps" "/var/www/html/storage/app/backups" \
       && mkdir -p "/var/lib/snipeit/keys" && ln -fs "/var/lib/snipeit/keys/oauth-private.key" "/var/www/html/storage/oauth-private.key" \
       && ln -fs "/var/lib/snipeit/keys/oauth-public.key" "/var/www/html/storage/oauth-public.key" \
+      && ln -fs "/var/lib/snipeit/keys/ldap_client_tls.cert" "/var/www/html/storage/ldap_client_tls.cert" \
+      && ln -fs "/var/lib/snipeit/keys/ldap_client_tls.key" "/var/www/html/storage/ldap_client_tls.key" \
       && chown docker "/var/lib/snipeit/keys/" \
       && chown -h docker "/var/www/html/storage/" \
       && chmod +x /var/www/html/artisan \

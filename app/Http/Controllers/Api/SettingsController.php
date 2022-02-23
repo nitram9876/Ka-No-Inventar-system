@@ -17,6 +17,7 @@ use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Ldap; // forward-port of v4 LDAP model for Sync
+use App\Http\Requests\SlackSettingsRequest;
 
 
 class SettingsController extends Controller
@@ -165,31 +166,41 @@ class SettingsController extends Controller
     public function slacktest(Request $request)
     {
 
-        $slack = new Client([
-            'base_url' => e($request->input('slack_endpoint')),
-            'defaults' => [
-                'exceptions' => false
-            ]
+        $validator = Validator::make($request->all(), [
+            'slack_endpoint'                      => 'url|required_with:slack_channel|starts_with:https://hooks.slack.com/|nullable',
+            'slack_channel'                       => 'required_with:slack_endpoint|starts_with:#|nullable',
         ]);
 
-
-        $payload = json_encode(
-            [
-                'channel'    => e($request->input('slack_channel')),
-                'text'       => trans('general.slack_test_msg'),
-                'username'    => e($request->input('slack_botname')),
-                'icon_emoji' => ':heart:'
-            ]);
-
-        try {
-            $slack->post($request->input('slack_endpoint'),['body' => $payload]);
-            return response()->json(['message' => 'Success'], 200);
-        } catch (\Exception $e) {
-            return response()->json(['message' => 'Oops! Please check the channel name and webhook endpoint URL. Slack responded with: '.$e->getMessage()], 400);
+        if ($validator->fails()) {
+            return response()->json(['message' => 'Validation failed', 'errors' => $validator->errors()], 422);
         }
 
-        return response()->json(['message' => 'Something went wrong :( '], 400);
+        // If validation passes, continue to the curl request
+            $slack = new Client([
+                'base_url' => e($request->input('slack_endpoint')),
+                'defaults' => [
+                    'exceptions' => false,
+                ],
+            ]);
 
+            $payload = json_encode(
+                [
+                    'channel'    => e($request->input('slack_channel')),
+                    'text'       => trans('general.slack_test_msg'),
+                    'username'    => e($request->input('slack_botname')),
+                    'icon_emoji' => ':heart:',
+                ]);
+
+            try {
+                $slack->post($request->input('slack_endpoint'), ['body' => $payload]);
+                return response()->json(['message' => 'Success'], 200);
+
+            } catch (\Exception $e) {
+                return response()->json(['message' => 'Please check the channel name and webhook endpoint URL ('.$request->input('slack_endpoint').'). Slack responded with: '.$e->getMessage()], 400);
+            }
+        
+        //} 
+        return response()->json(['message' => 'Something went wrong :( '], 400);
     }
 
 
